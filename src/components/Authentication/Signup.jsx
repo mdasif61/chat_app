@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const [name, setName] = useState('');
@@ -10,7 +10,7 @@ const Signup = () => {
     const [confirmPass, setConfirmPass] = useState('');
     const [photo, setPhoto] = useState('');
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
+    const navigate=useNavigate()
 
     const postDetails = (pics) => {
         setLoading(true);
@@ -62,12 +62,12 @@ const Signup = () => {
                 }
             };
 
-            const { data } = await axios.post('/api/user', { name, email, password, photo }, config)
+            const { data } = await axios.post('http://localhost:5000/api/user', { name, email, password, photo }, config)
 
             toast.success('Registration Successfull');
             localStorage.setItem('userInfo', JSON.stringify(data));
             setLoading(false)
-            history.push('/chats')
+            navigate('/login')
 
         } catch (error) {
             toast.error('Error Occured');
